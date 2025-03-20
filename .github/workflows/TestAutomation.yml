@@ -14,8 +14,9 @@ jobs:
           python-version: "3.10"
 
       - name: Install dependencies
-        run: apt install python3 pipenv -y
-        run: pipenv install fastapi uvicorn pytest requests
+        run: |
+          sudo apt install -y python3 pipenv
+          pipenv install fastapi uvicorn pytest requests
 
       - name: Start FastAPI server
         run: pipenv run python3 apiserver.py &
@@ -23,7 +24,7 @@ jobs:
           PYTHONUNBUFFERED: 1
 
       - name: Wait for server to be ready
-        run: sleep 5  # Wait to ensure the server is up
+        run: sleep 5  # Adjust if necessary
 
       - name: Run tests
         run: pipenv run pytest automation_test_pytest.py
